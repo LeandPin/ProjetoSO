@@ -6,10 +6,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/*
+Equipe: IGOR WANDERLEY MOURA
+        LEANDESON PINHEIRO SANTOS DE ARAÚJO
+
+*/
+
+
+/*
+Esta aplicação lê um arquivo contendo alguns processos e invoca algoritmos de escalonamento para que
+sejam exibidas algumas métricas (retorno, espera e resposta).
+ */
+
+
+
 public class Main {
   public static void main(String[] args) {
     List<Processo> processos = new ArrayList<>();
     // Leitura do arquivo e criação da lista de processos
+    //Aqui o arquivo é lido ate o final, e usado a técnica de regex com separação de espaço para setar os atributos de
+    // cada objeto
     try (BufferedReader buffRead =
              new BufferedReader(new FileReader("C:\\Users\\leand\\OneDrive\\Área de Trabalho\\entrada.txt"))) {
       String linha;
@@ -24,14 +40,15 @@ public class Main {
       System.err.println("Erro de leitura do arquivo.");
     }
 
-    // Chamada as funçõoes
+    // Chamada as funções principais do código e exibe os resultados
     Main main = new Main();
     System.out.printf("FCFS %.1f %.1f %.1f\n",  main.fcfsRetorno(processos), main.fcfs(processos), main.fcfsEspera(processos));
     main.sjf(processos);
     main.rr(processos);
     }
 
-  // IMPLEMENTAÇÃO FCFS
+  // Função Responsável Pela média de Resposta do FCFS
+  // Recebe uma lista de processos e atualiza a variável de média a cada processo
   public Double fcfs(List<Processo> processos) {
     double media = 0;
     double tempoAtual = 0; // Representa o tempo atual no sistema
@@ -54,7 +71,9 @@ public class Main {
     return media/processos.size();
   }
 
-
+  // Função Responsável Pela média de Retorno do FCFS
+  // Recebe uma lista de processos e atualiza a variável de média a cada processo e conferindo se o tempo
+  //atual é menor que a chegada do p e atualiza para a chegada caso seja
   public Double fcfsRetorno(List<Processo> processos) {
     double media = 0;
     double tempoAtual = 0;
@@ -76,7 +95,9 @@ public class Main {
 
   }
 
-
+  // Função Responsável Pela média de Espera do FCFS
+  // Recebe uma lista de processos e atualiza a variável de média a cada processo e conferindo se o tempo
+  //atual é menor que a chegada do p e atualiza para a chegada caso seja
   public Double fcfsEspera(List<Processo> processos) {
     double media = 0;
     double tempoAtual = 0;
@@ -98,6 +119,12 @@ public class Main {
 
   }
 
+  //Todas as Funções Abaixo recebem uma lista de processos lida diretamente de um arquivo
+
+  //Função Responsável pelo funcionamento do sjf
+  //a função processa todoo algoritmoo de sjf
+  // e é responsável por retornar a média de retorno, resposta e espera
+  // Além de que é responsável por printar as respostas para o algoritmo
   public void sjf(List<Processo> processos) {
     List<Processo> copiaProcessos = new ArrayList<>(processos);
     List<Processo> listaProntos = new ArrayList<>();
@@ -145,6 +172,16 @@ public class Main {
                                      tempoRespostaMedio, tempoEsperaMedio));
   }
 
+
+  //Função Responsável pelo funcionamento do sjf
+  //a função processa todoo algoritmoo de sjf
+  // e é responsável por retornar a média de retorno, resposta e espera
+  // Além de que é responsável por printar as respostas para o algoritmo
+
+  /*
+  Este algoritmo utiliza o Object Queue e a estrutura de dados LinkedList para simular uma estrutura de fila
+  já que facilita, por exemplo, a retirada de um processo da fila usando a funçã poll.
+   */
   public void rr(List<Processo> processos) {
     List<Processo> copiaProcessos = new ArrayList<>(processos);
     int quantum = 2;
